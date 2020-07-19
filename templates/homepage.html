@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Español para todos</title>
+{% endblock %}
+
+{% block content %}
+    {% for _, class_choice in class_choices %}
+        <h1><a href={{ class_choice }}>{{ class_choice }}</a></h1>
+    {% endfor %}
+{% endblock %}
