@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% block slogen %}
+<div class="jumbotron text-center" style="margin-bottom:0">
+    <h1>Español para todos ({{ class_choice }})</h1>
+    <p>按住單字可以發音</p>
+</div>
+{% endblock  %}
+
 {% block title %}
     <title>Español para todos</title>
 {% endblock %}
@@ -9,21 +16,39 @@
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6">
             <h3 class="text-center" style="color:red;">Español</h3>
+            <hr>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6">
             <h3 class="text-center" style="color:red;">English</h3>
+            <hr>
         </div>
-    
     </div>
     <div class="row">
         {% for vocab in vocabs %}
             <div class="col-xs-6 col-sm-6 col-md-6">
-                <h3 class="text-center">{{ vocab.spanish }}</h3>
+                <h3 class="text-center" onclick="playAudio('audio1', 'es', '{{ vocab.spanish }}');">
+                    {{ vocab.spanish }}
+                </h3>
+                <hr>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6">
-                <h3 class="text-center">{{ vocab.english }}</h3>
+                <h3 class="text-center" onclick="playAudio('audio1', 'en', '{{ vocab.english }}');">
+                    {{ vocab.english }}
+                </h3>
+                <hr>
             </div>
         {% endfor %}
     </div>
 </div>
+<audio id="audio1"></audio>
+<script>
+    function playAudio(id, lang, text) {
+        var audio = document.getElementById(id);
+        // text = "caballo"
+        console.log(text)
+        audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang}&q=${text}`
+        audio.addEventListener('ended', function(){ this.currentTime = 0; }, false);
+        audio.play();
+    }
+</script>
 {% endblock %}
